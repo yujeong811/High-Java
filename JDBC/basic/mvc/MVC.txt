@@ -1,0 +1,21 @@
+MVC (Model, View, Controller) 패턴
+
+Model : 데이터
+View :  데이터를 보여주는 화면 -> 사용자에게 어떻게 보여주는지에 따라 view가 달라짐
+Controller : 사용자의 명령을 받아서 일처리를 시켜주는 것
+
+- MVC패턴의 비즈니스로직을 처리하는 클래스들
+
+1) VO, DTO ==> 데이터를 저장하는 역할만 하는 클래스 (VO : Value Object / DTO : Data Transfer Object)
+              ==> DB테이블에서 1개의 레코드를 저장할 클래스를 말한다.
+2) DAO     ==> SQL문을 DB서버로 보내서 결과를 얻어오는 역할을 수행하는 클래스 (DAO : Data Access Object)
+3) Service  ==> 일을 수행하는 중간 관리자와 같은 역할을 수행하는 클래스    
+                    서비스는 일이 있으면 그 일에 필요한 DAO를 호출해서 일을 처리한 후 처리 결과를 Controller에게 전달한다.
+4) Controller ==> 비즈니스 로직이 시작되는 곳으로 사용자의 요구에 맞는 일을 만들어서
+                       Service에게 일을 시키고 Service가 보내온 처리결과를 View로 보낸다. --> MVC모델2
+                       (처리결과를 화면 등에 반영시킨다.) --> MVC모델1
+
+   Controller  --->  Service  --->  DAO  <-->  DB서버
+                 <---             <---      
+각 단계의 자료 이동은 보통 VO나 Collection객체에 담아서 보낸다.  
+DAO -> Service -> Controller 순
