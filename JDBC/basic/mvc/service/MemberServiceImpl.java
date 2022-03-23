@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.basic.mvc.dao.IMemberDao;
 import kr.or.ddit.basic.mvc.dao.MemberDaoImpl;
@@ -103,13 +104,30 @@ public class MemberServiceImpl implements IMemberService {
 		return count;
 	}
 
+//	@Override
+//	public int littleupdateMember(MemberVO memVo) {
+//		Connection conn = null;
+//		int cnt = 0; // 반환값 변수
+//		try {
+//			conn = DBUtil3.getConnection();
+//			cnt = dao.littleupdateMember(conn, memVo);		
+//			
+//		} catch (SQLException e) {
+//			cnt = 0;
+//			e.printStackTrace();
+//		} finally {
+//			if(conn != null) try {conn.close();} catch (SQLException e) {}
+//		}
+//		return cnt;
+//	}
+
 	@Override
-	public int littleupdateMember(MemberVO memVo) {
+	public int updateMember2(Map<String, String> paramMap) {
 		Connection conn = null;
 		int cnt = 0; // 반환값 변수
 		try {
 			conn = DBUtil3.getConnection();
-			cnt = dao.littleupdateMember(conn, memVo);		
+			cnt = dao.updateMember2(conn, paramMap);		
 			
 		} catch (SQLException e) {
 			cnt = 0;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.basic.mvc.vo.MemberVO;
 
@@ -110,18 +111,35 @@ public class MemberDaoImpl implements IMemberDao {
 		return count;
 	}
 
+//	@Override
+//	public int littleupdateMember(Connection conn, MemberVO memVo) throws SQLException {
+//		String sql = "update mymember set " + memVo.getUpdateField() + " = ? where mem_id = ? ";
+//		
+//		PreparedStatement pstmt = conn.prepareStatement(sql);	
+//		pstmt.setString(1, memVo.getUpdateData());
+//		pstmt.setString(2, memVo.getMem_id());
+//		
+//		int cnt = pstmt.executeUpdate();
+//
+//		if(pstmt != null) pstmt.close();
+//		
+//		return cnt;
+//	}
+
 	@Override
-	public int littleupdateMember(Connection conn, MemberVO memVo) throws SQLException {
-		String sql = "update mymember set " + memVo.getUpdateField() + " = ? where mem_id = ? ";
-		
-		PreparedStatement pstmt = conn.prepareStatement(sql);	
-		pstmt.setString(1, memVo.getUpdateData());
-		pstmt.setString(2, memVo.getMem_id());
-		
+	public int updateMember2(Connection conn, Map<String, String> paramMap) throws SQLException {
+		String sql = "update mymember set " + paramMap.get("field") + " = ? where mem_id = ? ";
+
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+		pstmt.setString(1, paramMap.get("data"));
+		pstmt.setString(2, paramMap.get("memid"));
+
 		int cnt = pstmt.executeUpdate();
 
-		if(pstmt != null) pstmt.close();
-		
+		if (pstmt != null)
+			pstmt.close();
+
 		return cnt;
 	}
 }

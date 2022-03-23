@@ -3,6 +3,7 @@ package kr.or.ddit.basic.mvc.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.basic.mvc.vo.MemberVO;
 
@@ -58,5 +59,8 @@ public interface IMemberService {
      */
     public int getMemberCount(String memId);
     
-    public int littleupdateMember(MemberVO memVo);
+//    public int littleupdateMember(MemberVO memVo);
+    
+    public int updateMember2(Map<String, String> paramMap);
+    
 }

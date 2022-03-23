@@ -1,7 +1,9 @@
 package kr.or.ddit.basic.mvc.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import kr.or.ddit.basic.mvc.service.IMemberService;
@@ -248,12 +250,23 @@ public class MemberController {
 		System.out.print("새로운 " + updateTitle + " >> ");
 		String updateData = scan.nextLine();
 	
-		MemberVO memVo = new MemberVO();
-		memVo.setMem_id(memId);
-		memVo.setUpdateField(updateField);
-		memVo.setUpdateData(updateData);
+//		MemberVO memVo = new MemberVO();
+//		memVo.setMem_id(memId);
+//		memVo.setUpdateField(updateField);
+//		memVo.setUpdateData(updateData);
+//		
+//		int cnt = service.littleupdateMember(memVo);
 		
-		int cnt = service.littleupdateMember(memVo);
+		
+		// 수정 작업에 필요한 정보를 Map객체에 셋팅한다.
+		// key값 정보 ==> 회원ID(memid), 수정할 컬럼명(field), 수정할 데이터(data)
+		Map<String, String> paramMap = new HashMap<String, String>();
+		
+		paramMap.put("memid", memId);
+		paramMap.put("field", updateField); // 수정할 컬럼명
+		paramMap.put("data", updateData); // 수정할 데이터
+		
+		int cnt = service.updateMember2(paramMap);
 		
 		if (cnt > 0) {
 			System.out.println(memId + " 회원 정보 수정 완료~~~");
