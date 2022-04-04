@@ -1,84 +1,103 @@
 package kr.or.ddit.basic.mvc.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
-import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 
 import kr.or.ddit.basic.mvc.dao.IMemberDao;
 import kr.or.ddit.basic.mvc.dao.MemberDaoImpl;
 import kr.or.ddit.basic.mvc.vo.MemberVO;
-import kr.or.ddit.util.DBUtil3;
 import kr.or.ddit.util.SqlMapClientFactory;
 
 public class MemberServiceImpl implements IMemberService {
 	private IMemberDao dao;
-	private static MemberServiceImpl memSer;
-	
+	private SqlMapClient smc;
+
+	private static MemberServiceImpl service;
+
 	private MemberServiceImpl() {
 		dao = MemberDaoImpl.getInstance();
+		smc = SqlMapClientFactory.getSqlMapClient();
 	}
-	
+
 	public static MemberServiceImpl getInstance() {
-		if(memSer == null) memSer = new MemberServiceImpl();
-		
-		return memSer;
+		if (service == null)
+			service = new MemberServiceImpl();
+		return service;
 	}
 
 	@Override
-	public Object insertMember(MemberVO memVo) {
-		SqlMapClient smc = null;
-		Object obj = null;
+	public int insertMember(MemberVO memVo) {
+		int cnt = 0;
 		try {
-			smc = SqlMapClientFactory.getSqlMapClient();
-			obj = smc.insert("member.insertMember", memVo);	
-			
+			cnt = dao.insertMember(smc, memVo);
 		} catch (SQLException e) {
-			obj = null;
+			cnt = 0;
 			e.printStackTrace();
-		} 
-		
-		return obj;
+		}
+		return cnt;
 	}
 
 	@Override
 	public int deleteMember(String memId) {
-		SqlMapClient smc = null;
 		int cnt = 0;
 		try {
-			smc = SqlMapClientFactory.getSqlMapClient();
-			cnt = smc.delete("member.deleteMember", memId);	
-			
+			cnt = dao.deleteMember(smc, memId);
 		} catch (SQLException e) {
 			cnt = 0;
 			e.printStackTrace();
-		} 
-		
+		}
 		return cnt;
 	}
 
 	@Override
 	public int updateMember(MemberVO memVo) {
-	
+		int cnt = 0;
+		try {
+			cnt = dao.updateMember(smc, memVo);
+		} catch (SQLException e) {
+			cnt = 0;
+			e.printStackTrace();
+		}
+		return cnt;
 	}
 
 	@Override
 	public List<MemberVO> getAllMember() {
-	
+		List<MemberVO> memList = null;
+		try {
+			memList = dao.getAllMember(smc);
+		} catch (SQLException e) {
+			memList = null;
+			e.printStackTrace();
+		}
+		return memList;
 	}
 
 	@Override
 	public int getMemberCount(String memId) {
-		
+		int count = 0;
+		try {
+			count = dao.getMemberCount(smc, memId);
+		} catch (SQLException e) {
+			count = 0;
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override
 	public int updateMember2(Map<String, String> paramMap) {
-		
+		int cnt = 0;
+		try {
+			cnt = dao.updateMember2(smc, paramMap);
+		} catch (SQLException e) {
+			cnt = 0;
+			e.printStackTrace();
+		}
+		return cnt;
 	}
 
 }
